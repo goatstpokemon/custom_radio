@@ -1,9 +1,4 @@
-#include <Arduino.h>
-#include <WiFi.h>
-class wifiman {
-  public:
-    string WifiScanner();
-    void WifiConnect(string wifiSSID);
-}
-
-
+#ifndef WIFIMAN_H
+#define WIFIMANH
+char* const WifiScanner();
+#endif

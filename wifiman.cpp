@@ -1,6 +1,7 @@
 #include "wifiman.h"
-
-string wifiman::WifiScanner() {
+#include <WiFi.h>
+#include "Arduino.h"
+char* const WifiScanner() {
    int n = WiFi.scanNetworks();
   Serial.println("scan done");
   if (n == 0) {
@@ -20,17 +21,18 @@ string wifiman::WifiScanner() {
       delay(10);
     }
   }
-}
+  return "none";
+};
 
-void wifiman::WifiConnect(string wifiSSID) {  
-  WiFi.mode(WIFI_STA);
-  WiFi.begin(wifiSSID, password);
-  Serial.print("Connecting to WiFi ..");
-  while (WiFi.status() != WL_CONNECTED) {
-    Serial.print('.');
-    delay(1000);
-  }
+// void wifiman::WifiConnect(String wifiSSID) {  
+//   WiFi.mode(WIFI_STA);
+//   WiFi.begin(wifiSSID);
+//   Serial.print("Connecting to WiFi ..");
+//   while (WiFi.status() != WL_CONNECTED) {
+//     Serial.print('.');
+//     delay(1000);
+//   }
   
-  Serial.println(WiFi.localIP());
+//   Serial.println(WiFi.localIP());
 
-}
+// }
