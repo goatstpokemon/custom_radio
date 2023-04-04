@@ -7,7 +7,9 @@ class Routes{
   private: 
     HTTPClient http;
     // const String baseURL = "https://radio.lukedixon.nl/api/";
-    const String baseURL = "http://192.168.45.209/IPMEDT5_dashboard/public/api/";
+    // const String baseURL = "http://192.168.45.209/IPMEDT5_dashboard/public/api/";
+    const String baseURL = "http://192.168.3.47/radio/public/api/";
+
     String request(String url);
   public:
     String AllStations();

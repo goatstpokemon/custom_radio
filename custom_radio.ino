@@ -16,8 +16,12 @@
 #define VS1053_MISO   19
 #define VS1053_SCK    18
 
-char* ssid =     "NS_Business";
-char* password = "Hello112?";
+// char* ssid =     "NS_Business";
+// char* password = "Hello112?";
+
+char* ssid =     "thenoonoo";
+char* password = "XnpcVQeuutaA";
+
 String payload;
 
 int volume=5;
@@ -47,16 +51,19 @@ void setup() {
     //  mp3.loadUserCode(); // FLAC plugin
     mp3.setVolume(volume);
     
-     String payload = route.GetAllCountries();   
+     String payload = route.AllStations();   
      
     
      JSONVar output = JSON.parse(payload);
-     String name = output["data"][1]["name"];
+     String name = output["data"][1]["output"];
      Serial.print("payload: " );
      Serial.println(payload );
      Serial.print("output: " );
      Serial.println(name );
-    // mp3.connecttohost("https://22663.live.streamtheworld.com/SKYRADIO.mp3");
+     if(name){
+       mp3.connecttohost(name);
+     }
+     
     // mp3.connecttohost("https://stream.slam.nl/web10_mp3");                 // mp3 192kb/s
     
 }
@@ -65,7 +72,7 @@ void setup() {
 void loop()
 {
   
-    // mp3.loop();
+     mp3.loop();
    
   
   delay(20000);
