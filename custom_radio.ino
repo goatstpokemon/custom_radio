@@ -16,11 +16,9 @@
 #define VS1053_MISO   19
 #define VS1053_SCK    18
 
-// char* ssid =     "NS_Business";
-// char* password = "Hello112?";
+char* ssid =     "NS_Business";
+char* password = "Hello112?";
 
-char* ssid =     "thenoonoo";
-char* password = "XnpcVQeuutaA";
 
 String payload;
 
@@ -51,19 +49,25 @@ void setup() {
     //  mp3.loadUserCode(); // FLAC plugin
     mp3.setVolume(volume);
     
-     String payload = route.AllStations();   
+    //  String payload = route.GetRandomRadio();   
      
     
-     JSONVar output = JSON.parse(payload);
-     String name = output["data"][1]["output"];
-     Serial.print("payload: " );
-     Serial.println(payload );
-     Serial.print("output: " );
-     Serial.println(name );
-     if(name){
-       mp3.connecttohost(name);
-     }
+    //  JSONVar output = JSON.parse(payload);
+    //  String name = output["data"]["output"];
      
+    //  Serial.print("payload: " );
+    //  Serial.println(payload );
+    //  Serial.print("name: " );
+    //  Serial.println(name );
+    //  if(name){
+    //    mp3.connecttohost(name);
+    //  }
+          
+    //  int stationId = output["data"]["id"];
+    //  Serial.print("Station ID: ");
+    //  Serial.println(stationId);
+    //  route.PutRadioInfo(stationId);
+     route.UpdateVolume(1, volume);
     // mp3.connecttohost("https://stream.slam.nl/web10_mp3");                 // mp3 192kb/s
     
 }

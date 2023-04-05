@@ -8,23 +8,24 @@ class Routes{
     HTTPClient http;
     // const String baseURL = "https://radio.lukedixon.nl/api/";
     // const String baseURL = "http://192.168.45.209/IPMEDT5_dashboard/public/api/";
-    const String baseURL = "http://192.168.3.47/radio/public/api/";
+    // const String baseURL = "http://192.168.3.47/radio/public/api/";
+    const String baseURL = "http://192.168.45.31/radio/public/api/";
 
     String request(String url);
   public:
     String AllStations();
-    String AllCountryStations(const char* country_id);
-    String AllGenreStations(const char* country_id);
+    String AllCountryStations(const int country_id);
+    String AllGenreStations(const int country_id);
     String GetRadioInfo();
     String GetRandomRadio();
-    String PutRadioInfo(const char* stationID);
+    String PutRadioInfo(const int stationID);
     String GetAllCountries();
-    String GetCountryById(const char* countryId);
-    String GetFavorites(const char* user_id);
-    String PostNewFavorite(const char* user_id, const char* favorite_id);
-    String DeleteFavorite(const char* user_id, const char* favorite_id);
-    String GetSettings(const char* user_id); 
-    String UpdateVolume(const char* user_id, int volume);
+    String GetCountryById(const int countryId);
+    String GetFavorites(const int user_id);
+    String PostNewFavorite(const int user_id, const int favorite_id);
+    String DeleteFavorite(const int user_id, const int favorite_id);
+    String GetSettings(const int user_id); 
+    String UpdateVolume(const int user_id, const int volume);
 };
 
 #endif
