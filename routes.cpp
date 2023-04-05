@@ -10,6 +10,8 @@
       
       http.begin(url);
       int httpCode = http.GET();
+     http.addHeader("Content-Type", "audio/x-mpegurl");
+     http.addHeader("Set-Cookie", "__cf_bm=LRKywEzgZAhQpcjCyFJULpciGHYX0bsJrbk7DVOAipk-1680684134-0-ATeg8tnV0/dZq62qpAcWJHoRuwCkJekGfBPeaIXgfFaw/lXPxSbyak+3yCQ7VDqmO6lhgU5LLRgAGUNDz+/3Wyw=; path=/; expires=Wed, 05-Apr-23 09:12:14 GMT; domain=.radiotime.com; HttpOnly; SameSite=None");
       if (httpCode > 0) {
         if (httpCode == HTTP_CODE_OK) {
           

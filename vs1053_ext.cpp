@@ -2238,12 +2238,13 @@ bool VS1053::connecttohost(const char* host, const char* user, const char* pwd) 
     strcat(rqh, hostwoext);
     strcat(rqh, "\r\n");
     strcat(rqh, "Icy-MetaData:1\r\n");
-    strcat(rqh, "Authorization: Basic ");
-    strcat(rqh, authorization);
+    // strcat(rqh, "Authorization: Basic ");
+    // strcat(rqh, authorization);
     strcat(rqh, "\r\n");
     strcat(rqh, "Accept-Encoding: identity;q=1,*;q=0\r\n");
     strcat(rqh, "User-Agent: Mozilla/5.0\r\n");
     strcat(rqh, "Connection: keep-alive\r\n\r\n");
+    
 
     if(ESP_ARDUINO_VERSION_MAJOR == 2 && ESP_ARDUINO_VERSION_MINOR == 0 && ESP_ARDUINO_VERSION_PATCH >= 3){
         m_timeout_ms_ssl = UINT16_MAX;  // bug in v2.0.3 if hostwoext is a IPaddr not a name

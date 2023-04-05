@@ -47,16 +47,16 @@ void setup() {
     //  mp3.loadUserCode(); // FLAC plugin
     mp3.setVolume(volume);
     
-     String payload = route.GetAllCountries();   
+    //  String payload = route.GetAllCountries();   
      
     
-     JSONVar output = JSON.parse(payload);
-     String name = output["data"][1]["name"];
-     Serial.print("payload: " );
-     Serial.println(payload );
-     Serial.print("output: " );
-     Serial.println(name );
-    // mp3.connecttohost("https://22663.live.streamtheworld.com/SKYRADIO.mp3");
+    //  JSONVar output = JSON.parse(payload);
+    //  String name = output["data"][1]["name"];
+    //  Serial.print("payload: " );
+    //  Serial.println(payload );
+    //  Serial.print("output: " );
+    //  Serial.println(name );
+     mp3.connecttohost("http://opml.radiotime.com/Tune.ashx?id=s251199");
     // mp3.connecttohost("https://stream.slam.nl/web10_mp3");                 // mp3 192kb/s
     
 }
@@ -65,10 +65,10 @@ void setup() {
 void loop()
 {
   
-    // mp3.loop();
+    mp3.loop();
    
   
-  delay(20000);
+  // delay(2000);
 }
 
 
@@ -85,4 +85,7 @@ void vs1053_showstreamtitle(const char *info){      // called from vs1053
     Serial.print("STREAMTITLE:  ");
     Serial.println(info);                           // Show title
 }
-
+void vs1053_showstreaminfo(const char *info){       // called from vs1053
+    Serial.print("STREAMINFO:   ");
+    Serial.println(info);                           // Show streaminfo
+}
