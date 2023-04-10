@@ -2,7 +2,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
 #include "routes.h"
-
+#include <Arduino_JSON.h>
 
 
     
@@ -43,7 +43,11 @@
 
     // Retrieve data of a station
     String Routes::GetRandomRadio() {      
-      return request(baseURL + "stations/discover");
+        String payload;
+        payload = request(baseURL + "stations/discover");
+        JSONVar output = JSON.parse(payload);
+        String name = output["data"]["output"];
+        return name;
     }
 
     // Send data to front-end about currently playing station
@@ -107,16 +111,20 @@
     // PUT /api/users/{user_id}/settings?volume={volume}
     // Update the volume
     String Routes::UpdateVolume(const int user_id, const int volume) {
-      http.begin(baseURL + "users/" +  user_id  + "/settings/");      
+      http.begin(baseURL + "users/" +  user_id  + "/settings");      
+      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
       String payload = "volume=";
-      payload.concat(volume);  
-      Serial.println(baseURL + "users/" +  user_id  + "/settings/" + volume); 
+      payload.concat(volume); 
+
+      Serial.println(payload); 
       int httpCode = http.PUT(payload);
       if (httpCode > 0) {
         if (httpCode == HTTP_CODE_OK) {
+          Serial.println(http.getString());
           return http.getString();
         }
       }
+      Serial.println("ik ben hier");
       return "Error";
     }
 
