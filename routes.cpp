@@ -31,14 +31,15 @@
       return request(baseURL + "stations?country=" + country_id);
     }
 
-    // Retrieve all radio stations from one genre
-    String Routes::AllGenreStations(const int genre_id) {
-      return request(baseURL + "stations?genre=" + genre_id);
-    }
+    
 
     // Retrieve data of a station
     String Routes::GetRadioInfo() {      
-      return request(baseURL + "stations?playing=1");
+      String payload;
+        payload = request(baseURL + "stations/discover");
+        JSONVar output = JSON.parse(payload);
+        String name = output["data"]["output"];
+        return name;
     }
 
     // Retrieve data of a station

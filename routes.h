@@ -9,13 +9,12 @@ class Routes{
     // const String baseURL = "https://radio.lukedixon.nl/api/";
     // const String baseURL = "http://192.168.45.209/IPMEDT5_dashboard/public/api/";
     // const String baseURL = "http://192.168.3.47/radio/public/api/";
-    const String baseURL = "http://192.168.3.4/api/";
+    const String baseURL = "http://192.168.203.31/api/";
 
     String request(String url);
   public:
     String AllStations();
-    String AllCountryStations(const int country_id);
-    String AllGenreStations(const int country_id);
+    String AllCountryStations(const int country_id);  
     String GetRadioInfo();
     String GetRandomRadio();
     String PutRadioInfo(const int stationID);

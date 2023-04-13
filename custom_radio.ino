@@ -16,8 +16,8 @@
 #define VS1053_MISO   19
 #define VS1053_SCK    18
 
-char* ssid =     "";
-char* password = "";
+char* ssid =     "NS_Business";
+char* password = "Hello112?";
 
 #define RXp2 16
 #define TXp2 17
@@ -51,26 +51,33 @@ void setup() {
     while (WiFi.status() != WL_CONNECTED) delay(1500);
     Serial.print("Connected To:");
     Serial.println(ssid);
-    getVolume = route.GetSettings(1);
-    JSONVar volumeRaw = JSON.parse(getVolume);
-    String nameRaw = volumeRaw["data"]["output"];  
-    Serial.println("nameRaw: " );
-    Serial.print(nameRaw);
+    // getVolume = route.GetSettings(1);
+    // JSONVar volumeRaw = JSON.parse(getVolume);
+    // String nameRaw = volumeRaw["data"]["output"];  
+    // Serial.println("nameRaw: " );
+    // Serial.print(nameRaw);
     mp3.begin();
-    //  mp3.loadUserCode(); // FLAC plugin
-    mp3.setVolume(volume);
-    
-     String payload = route.GetRandomRadio();   
+    mp3.setVolume(volume);    
+    // String payload = route.GetRadioInfo();   
+    String payload = route.AllStations();   
+     JSONVar getRadioInfo = JSON.parse(payload);
+    String radioRawName = getRadioInfo["data"][0]["output"];  
+    String radioId = getRadioInfo["data"]["id"];
+    Serial.print("payload");
+    Serial.println(payload);
+     Serial.print("Radio Naam: " );
+     Serial.println(radioRawName );
+     Serial.print("Radio id: " );
+     Serial.println(radioId );
      
-    
      
      
      
-     Serial.print("name: " );
-     Serial.println(payload );
-     if(payload){
-       mp3.connecttohost(payload);
-     }
+    //  Serial.print("name: " );
+    //  Serial.println(payload );
+    //  if(payload){
+    //    mp3.connecttohost(payload);
+    //  }
           
     //  int stationId = output["data"]["id"];
     //  Serial.print("Station ID: ");
@@ -79,44 +86,52 @@ void setup() {
      
      
 
-     //serial2.print()
+     Serial2.write("yoooo");
      
-    // mp3.connecttohost("https://stream.slam.nl/web10_mp3");                 // mp3 192kb/s
+    mp3.connecttohost("https://stream.slam.nl/web10_mp3");                 // mp3 192kb/s
     
 }
 
 // The loop function is called in an endless loop
 void loop()
 {
-  
-     mp3.loop();
-  //  route.UpdateVolume(1, 7);
+    // Serial2.write("yoooo");
+    //  mp3.loop();
+    //  route.UpdateVolume(1, 7);
     Serial2.println(Serial.readString());
-  // delay(5000);
+  Serial.println("sent");
+  Serial2.write("STATION: ");
+  Serial2.write(info);
+  delay(2000);
+  // Serial.print("STATION: ");
+  // Serial.println("hfa;eohohewgwgoh");
 }
 
 
   
   
-
+// STATION        STATIONAAM
+//  StationRaw = Station
+// verwijder alle spaties 
+// verwijder eerste 7
 
 // next code is optional:
 void vs1053_showstation(const char *info){          // called from vs1053
     Serial.println("STATION:      ");
     Serial.println(info);                           // Show station name
-    Serial2.write("STATION:       ");
+    Serial2.write("STATION: ");
     Serial2.write(info);
 }
 void vs1053_showstreamtitle(const char *info){      // called from vs1053
-    Serial.print("STREAMTITLE:  ");
+    Serial.print("STREAMTITLE: ");
     Serial.println(info);                           // Show title
-    Serial2.write("STREAMTITLE:       ");
+    Serial2.write("STREAMTITLE: ");
     Serial2.write(info);
     
 }
 void vs1053_showstreaminfo(const char *info){       // called from vs1053
-    Serial.print("STREAMINFO:   ");
-    Serial.println(info);                           // Show streaminfo
-    Serial2.write("STREAMINFO:       ");
+    // Serial.print("STREAMINFO:   ");
+    // Serial.println(info);                           // Show streaminfo
+    Serial2.write("STREAMINFO: ");
     Serial2.write(info);
 }
