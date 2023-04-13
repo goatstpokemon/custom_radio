@@ -16,33 +16,31 @@
 #define VS1053_MISO   19
 #define VS1053_SCK    18
 
-char* ssid =     "NS_Business";
-char* password = "Hello112?";
+char* ssid =     "";
+char* password = "";
 
 #define RXp2 16
 #define TXp2 17
 String payload;
 
-int volume=7;
+int volume=4;
 
 VS1053 mp3(VS1053_CS, VS1053_DCS, VS1053_DREQ, VSPI, VS1053_MOSI, VS1053_MISO, VS1053_SCK);
 Routes route;
-String getVolume;
+int getVolume;
 
 //The setup function is called once at startup of the sketch
 void setup() {
     Serial2.begin(9600, SERIAL_8N1, RXp2, TXp2);
     Serial.begin(115200);
     
-    Serial.println("Serial Txd is on pin: "+String(TX));
-    Serial.println("Serial Rxd is on pin: "+String(RX));
     SPI.begin();
-    //SD.begin();
+
 
     
     
     WiFi.disconnect();
-    WifiScanner();
+    // WifiScanner();
     WiFi.mode(WIFI_STA);
     WiFi.begin(ssid, password);
     
@@ -51,25 +49,19 @@ void setup() {
     while (WiFi.status() != WL_CONNECTED) delay(1500);
     Serial.print("Connected To:");
     Serial.println(ssid);
-    // getVolume = route.GetSettings(1);
-    // JSONVar volumeRaw = JSON.parse(getVolume);
-    // String nameRaw = volumeRaw["data"]["output"];  
-    // Serial.println("nameRaw: " );
-    // Serial.print(nameRaw);
+    
     mp3.begin();
-    mp3.setVolume(volume);    
+    // route.UpdateVolume(1,4);    
+    getVolume = route.GetSettings(1);
+    mp3.setVolume(getVolume);    
     // String payload = route.GetRadioInfo();   
-    String payload = route.AllStations();   
-     JSONVar getRadioInfo = JSON.parse(payload);
-    String radioRawName = getRadioInfo["data"][0]["output"];  
-    String radioId = getRadioInfo["data"]["id"];
-    Serial.print("payload");
-    Serial.println(payload);
-     Serial.print("Radio Naam: " );
-     Serial.println(radioRawName );
-     Serial.print("Radio id: " );
-     Serial.println(radioId );
-     
+    // String payload = route.AllStations();   
+    // String payload = route.AllStations();   
+    // String favorites = route.GetFavorites(1);   
+    // Serial.print("Favorites: " );
+    // Serial.println(favorites );
+    route.PostNewFavorite(1,5);
+    
      
      
      
@@ -94,26 +86,21 @@ void setup() {
 
 // The loop function is called in an endless loop
 void loop()
-{
-    // Serial2.write("yoooo");
+{    
     //  mp3.loop();
     //  route.UpdateVolume(1, 7);
-    Serial2.println(Serial.readString());
-  Serial.println("sent");
-  Serial2.write("STATION: ");
-  Serial2.write(info);
-  delay(2000);
+    Serial.println(Serial2.readString());
+    Serial.println("sent");
+  
+  // Serial2.write("STATION:");
+  Serial2.write("yoooo");
+  delay(20000);
   // Serial.print("STATION: ");
   // Serial.println("hfa;eohohewgwgoh");
 }
 
+ 
 
-  
-  
-// STATION        STATIONAAM
-//  StationRaw = Station
-// verwijder alle spaties 
-// verwijder eerste 7
 
 // next code is optional:
 void vs1053_showstation(const char *info){          // called from vs1053
@@ -130,8 +117,8 @@ void vs1053_showstreamtitle(const char *info){      // called from vs1053
     
 }
 void vs1053_showstreaminfo(const char *info){       // called from vs1053
-    // Serial.print("STREAMINFO:   ");
-    // Serial.println(info);                           // Show streaminfo
-    Serial2.write("STREAMINFO: ");
-    Serial2.write(info);
+    Serial.print("STREAMINFO:   ");
+    Serial.println(info);                           // Show streaminfo
+    // Serial2.write("STREAMINFO: ");
+    // Serial2.write(info);
 }

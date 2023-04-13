@@ -22,14 +22,14 @@
 
     // Retrieve all radio stations
     String Routes::AllStations() {
-      
-      return request(baseURL + "stations");
+      String payload;
+      payload = request(baseURL + "stations");
+      JSONVar getRadioInfo = JSON.parse(payload);
+      String radioArr = JSON.stringify(getRadioInfo["data"]);
+      return radioArr;
     }
 
-    // Retrieve all radio stations from one country
-    String Routes::AllCountryStations(const int country_id) {      
-      return request(baseURL + "stations?country=" + country_id);
-    }
+   
 
     
 
@@ -63,51 +63,60 @@
       return "Error";
     }
 
-    // Get all countries
-    String Routes::GetAllCountries() {      
-      return request(baseURL + "countries");
-    }
-
-    // Get country by countryId
-    String Routes::GetCountryById(const int countryId) {      
-      return request(baseURL + "countries/" + countryId);
-    }
+    
 
     // Get all favorites
     String Routes::GetFavorites(const int user_id) {      
-      return request(baseURL + "users/" + user_id + "/favorites");
+      String payload;
+      payload = request(baseURL + "users/" + user_id + "/favourites");;
+      JSONVar parsedFavorites= JSON.parse(payload);
+      String favoritesArr = JSON.stringify(parsedFavorites["data"]);
+      return favoritesArr;
+     
     }
 
     // Add favorite to database
     String Routes::PostNewFavorite(const int user_id, const int station_id) {
-      http.begin(baseURL + "users/" + user_id + "/favorites");
+      http.begin(baseURL + "users/" + user_id + "/favourites");
+      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
       String payload = "station=";
       payload.concat(station_id);
-      int httpCode = http.POST(payload);
+      payload.concat("favourite=");
+      payload.concat(1);
+      Serial.print(payload);
+      int httpCode = http.PUT(payload);
       if (httpCode > 0) {
         if (httpCode == HTTP_CODE_OK) {
+          Serial.print("Added favorite");
           return http.getString();
         }
       }
-      return "Error";
+      return "Error toevoegen niet gelukt";
     }
 
     // Delete favorite from database
     String Routes::DeleteFavorite(const int user_id, const int favorite_id) {
-      http.begin(baseURL + "users/" + user_id + "/favorites/" + favorite_id);
+      http.begin(baseURL + "users/" + user_id + "/favourites/" + favorite_id);
       int httpCode = http.sendRequest("DELETE");
       if (httpCode > 0) {
         if (httpCode == HTTP_CODE_OK) {
           return http.getString();
         }
       }
-      return "Error";
+      return "Error verwijderen niet gelukt";
     }
 
     // Get all settings for a user
-    String Routes::GetSettings(const int user_id) {
+    int Routes::GetSettings(const int user_id) {      
       
-      return request(baseURL + "users/" + user_id + "/settings");
+        String payload;
+        // String name;
+        payload = request(baseURL + "users/" + user_id + "/settings");
+        JSONVar output = JSON.parse(payload);
+        int parsed = output["data"]["volume"];                  
+        return parsed;
+        
+      
     }
     // PUT /api/users/{user_id}/settings?volume={volume}
     // Update the volume
@@ -118,7 +127,7 @@
       payload.concat(volume); 
 
       Serial.println(payload); 
-      int httpCode = http.PUT(payload);
+      int httpCode = http.POST(payload);
       if (httpCode > 0) {
         if (httpCode == HTTP_CODE_OK) {
           Serial.println(http.getString());

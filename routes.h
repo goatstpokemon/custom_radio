@@ -23,7 +23,7 @@ class Routes{
     String GetFavorites(const int user_id);
     String PostNewFavorite(const int user_id, const int favorite_id);
     String DeleteFavorite(const int user_id, const int favorite_id);
-    String GetSettings(const int user_id); 
+    int GetSettings(const int user_id); 
     String UpdateVolume(const int user_id, const int volume);
 };
 
