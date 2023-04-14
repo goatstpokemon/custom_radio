@@ -31,7 +31,7 @@ Routes route;
 int getVolume;
 unsigned long previousMillis = 0;
 const unsigned long interval = 2000;
-String oldStation;
+
 
 
 //The setup function is called once at startup of the sketch
