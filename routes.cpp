@@ -34,11 +34,27 @@
     
 
     // Retrieve data of a station
-    String Routes::GetRadioInfo() {      
+    String Routes::GetRadioInfo(const int stationID) {      
       String payload;
-        payload = request(baseURL + "stations/discover");
+      
+        payload = request(baseURL + "stations/" + stationID);
+        Serial.print(payload);
         JSONVar output = JSON.parse(payload);
+        Serial.println("output");
+        Serial.print(output);
         String name = output["data"]["output"];
+        return name;
+    }
+    // Retrieve data of a station
+    String Routes::GetPlayingStation() {      
+      Serial.print("test");
+        String payload;
+        payload = request(baseURL + "stations?is_playing=1" );
+       Serial.print(payload);
+        JSONVar output = JSON.parse(payload); 
+        Serial.println(output["data"][0]);
+        String name = output["data"][0]["output"];
+        
         return name;
     }
 
@@ -47,6 +63,7 @@
         String payload;
         payload = request(baseURL + "stations/discover");
         JSONVar output = JSON.parse(payload);
+
         String name = output["data"]["output"];
         return name;
     }
@@ -68,7 +85,8 @@
     // Get all favorites
     String Routes::GetFavorites(const int user_id) {      
       String payload;
-      payload = request(baseURL + "users/" + user_id + "/favourites");;
+      payload = request(baseURL + "users/" + user_id + "/favourites");
+      
       JSONVar parsedFavorites= JSON.parse(payload);
       String favoritesArr = JSON.stringify(parsedFavorites["data"]);
       return favoritesArr;

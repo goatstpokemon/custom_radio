@@ -24,15 +24,3 @@ char* const WifiScanner() {
   return "none";
 };
 
-// void wifiman::WifiConnect(String wifiSSID) {  
-//   WiFi.mode(WIFI_STA);
-//   WiFi.begin(wifiSSID);
-//   Serial.print("Connecting to WiFi ..");
-//   while (WiFi.status() != WL_CONNECTED) {
-//     Serial.print('.');
-//     delay(1000);
-//   }
-  
-//   Serial.println(WiFi.localIP());
-
-// }
