@@ -39,22 +39,42 @@
       
         payload = request(baseURL + "stations/" + stationID);
         Serial.print(payload);
-        JSONVar output = JSON.parse(payload);
-        Serial.println("output");
-        Serial.print(output);
+        JSONVar output = JSON.parse(payload);        
         String name = output["data"]["output"];
         return name;
     }
+    String Routes::updateSong(const int stationId, const String playing){
+       http.begin(baseURL + "stations/" +  stationId);      
+      http.addHeader("Content-Type", "application/x-www-form-urlencoded");
+      String payload = "now_playing=";
+      payload.concat(playing); 
+
+      Serial.println("song"); 
+      Serial.println(payload); 
+      int httpCode = http.PUT(payload);
+      if (httpCode > 0) {
+        if (httpCode == HTTP_CODE_OK) {
+          Serial.println(http.getString());
+          return http.getString();
+        }
+      }
+      Serial.println("ik ben hier");
+      return "Error";
+    }
+
+    String Routes::Reset(){
+      String payload;
+      payload = request(baseURL + "stations/clear");     
+      
+      return "Done";
+    }
     // Retrieve data of a station
     String Routes::GetPlayingStation() {      
-      Serial.print("test");
-        String payload;
-        payload = request(baseURL + "stations?is_playing=1" );
-       Serial.print(payload);
-        JSONVar output = JSON.parse(payload); 
-        Serial.println(output["data"][0]);
-        String name = output["data"][0]["output"];
         
+        String payload;
+        payload = request(baseURL + "stations?is_playing=1" );       
+        JSONVar output = JSON.parse(payload);                 
+        String name = JSON.stringify(output["data"][0]);   
         return name;
     }
 
@@ -63,7 +83,6 @@
         String payload;
         payload = request(baseURL + "stations/discover");
         JSONVar output = JSON.parse(payload);
-
         String name = output["data"]["output"];
         return name;
     }
@@ -101,11 +120,11 @@
       payload.concat(station_id);
       payload.concat("favourite=");
       payload.concat(1);
-      Serial.print(payload);
+      
       int httpCode = http.PUT(payload);
       if (httpCode > 0) {
         if (httpCode == HTTP_CODE_OK) {
-          Serial.print("Added favorite");
+          
           return http.getString();
         }
       }
@@ -124,6 +143,7 @@
       return "Error verwijderen niet gelukt";
     }
 
+    
     // Get all settings for a user
     int Routes::GetSettings(const int user_id) {      
       
